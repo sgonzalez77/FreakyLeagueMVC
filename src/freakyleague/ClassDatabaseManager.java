@@ -47,6 +47,7 @@ public final class ClassDatabaseManager {
                     return str.replaceAll("\"", "`");
                 }
             case 1:
+            case 2:
                 if (str.indexOf('`') != -1) {
                     return str.replaceAll("`", "\"");
                 }
@@ -79,7 +80,7 @@ public final class ClassDatabaseManager {
             //Class.forName ("com.mysql.jdbc.Driver");
             Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
         } catch (Exception e) {
-            System.out.println("Failed to load driver.");                        // cannot even find the driver--return to caller since cannot do anything.
+            System.out.println("Failed to load driver.");                       // cannot even find the driver--return to caller since cannot do anything.
         }
 
         try {                                                                   // Establish the database connection, create a statement for execution of SQL commands.
@@ -90,16 +91,19 @@ public final class ClassDatabaseManager {
                     connString = "jdbc:mysql://" + url + "/" + dbName;
                     break;
                 case 1:
+                    connString = "jdbc:derby://" + url + "/" + dbName;
+                    break;
+                case 2: //derby local database
                     connString = "jdbc:derby:" + url + "/" + dbName;
                     break;
             }
             connection = DriverManager.getConnection(connString, username, password);
-            statement = connection.createStatement();                          // statement used to do things in the database (e.g., create the PhoneBook table).
+            statement = connection.createStatement();                           // statement used to do things in the database (e.g., create the PhoneBook table).
             return true;
 
         } catch (SQLException exception) {
             System.out.println("\n*** SQLException caught ***\n");
-            while (exception != null) {                                                                   // grab the exception caught to tell us the problem.
+            while (exception != null) {                                         // grab the exception caught to tell us the problem.
                 System.out.println("SQLState:   " + exception.getSQLState());
                 System.out.println("Message:    " + exception.getMessage());
                 System.out.println("Error code: " + exception.getErrorCode());

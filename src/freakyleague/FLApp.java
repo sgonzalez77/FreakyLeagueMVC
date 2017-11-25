@@ -47,6 +47,8 @@ public class FLApp extends Application {
     public static void close() {
         System.out.println("closing..."); 
         //db.close();
+        //can I do it here? MVC rules...
+        freakyleague.FLModel.deleteDBGarbage();
         Platform.exit();
         System.exit(0);
     }

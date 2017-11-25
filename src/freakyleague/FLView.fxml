@@ -16,10 +16,10 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem fx:id="menuNew" mnemonicParsing="false" onAction="#newTournament" text="New" />
-                        <MenuItem mnemonicParsing="false" onAction="#openTournament" text="Open…" />
+                        <MenuItem fx:id="menuNew" mnemonicParsing="false" onAction="#newTournament" text="New" accelerator="Shortcut+n" />
+                        <MenuItem mnemonicParsing="false" onAction="#openTournament" text="Open…" accelerator="Shortcut+o" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Quit" />
+                        <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Quit" accelerator="Shortcut+q" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
@@ -51,6 +51,7 @@
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                     <children>
+                                        <Label fx:id="lblError" contentDisplay="RIGHT" layoutX="389.0" layoutY="13.0" prefHeight="17.0" prefWidth="226.0" textAlignment="RIGHT" textFill="#fc0505" wrapText="true" GridPane.columnIndex="1" />
                                         <Label layoutX="286.0" layoutY="13.0" text="Id:" />
                                         <TextField fx:id="txtId" disable="true" layoutX="312.0" layoutY="8.0" prefHeight="27.0" prefWidth="32.0" />
                                         <Label layoutX="1.0" layoutY="13.0" text="Date:" />
@@ -69,7 +70,7 @@
                                             <graphic>
                                                 <ImageView fitHeight="16.0" fitWidth="16.0">
                                                     <image>
-                                                        <Image url="/img/save.png" />
+                                                        <Image url="/media/save.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>    
@@ -82,7 +83,7 @@
                                             <graphic>
                                                 <ImageView fitHeight="16.0" fitWidth="16.0">
                                                     <image>
-                                                        <Image url="/img/save.png" />
+                                                        <Image url="/media/save.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>    
@@ -95,7 +96,7 @@
                                             <graphic>
                                                 <ImageView fitHeight="16.0" fitWidth="16.0">
                                                     <image>
-                                                        <Image url="/img/save.png" />
+                                                        <Image url="/media/save.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>    
@@ -108,7 +109,7 @@
                                             <graphic>
                                                 <ImageView fitHeight="16.0" fitWidth="16.0">
                                                     <image>
-                                                        <Image url="/img/save.png" />
+                                                        <Image url="/media/save.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>    
@@ -126,7 +127,7 @@
                                             <graphic>
                                                 <ImageView fitHeight="16.0" fitWidth="16.0">
                                                     <image>
-                                                        <Image url="/img/save.png" />
+                                                        <Image url="/media/save.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>    
@@ -139,7 +140,7 @@
                                             <graphic>
                                                 <ImageView fitHeight="16.0" fitWidth="16.0">
                                                     <image>
-                                                        <Image url="/img/save.png" />
+                                                        <Image url="/media/save.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>    
@@ -177,7 +178,7 @@
                                             <graphic>
                                                 <ImageView fitHeight="16.0" fitWidth="16.0">
                                                     <image>
-                                                        <Image url="/img/save.png" />
+                                                        <Image url="/media/save.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -189,7 +190,7 @@
                                             <graphic>
                                                 <ImageView fitHeight="16.0" fitWidth="16.0">
                                                     <image>
-                                                        <Image url="/img/save.png" />
+                                                        <Image url="/media/save.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -201,7 +202,7 @@
                                             <graphic>
                                                 <ImageView fitHeight="16.0" fitWidth="16.0">
                                                     <image>
-                                                        <Image url="/img/save.png" />
+                                                        <Image url="/media/save.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -213,7 +214,7 @@
                                             <graphic>
                                                 <ImageView fitHeight="16.0" fitWidth="16.0">
                                                     <image>
-                                                        <Image url="/img/save.png" />
+                                                        <Image url="/media/save.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -225,7 +226,7 @@
                                             <graphic>
                                                 <ImageView fitHeight="16.0" fitWidth="16.0">
                                                     <image>
-                                                        <Image url="/img/save.png" />
+                                                        <Image url="/media/save.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -237,7 +238,7 @@
                                             <graphic>
                                                 <ImageView fitHeight="16.0" fitWidth="16.0">
                                                     <image>
-                                                        <Image url="/img/save.png" />
+                                                        <Image url="/media/save.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -249,7 +250,9 @@
                         <Tab text="League Table">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <TableView fx:id="tvLeague" prefHeight="205.0" prefWidth="647.0" />
+                                   <children>
+                                       <TableView fx:id="tvLeague" prefHeight="205.0" prefWidth="647.0" />
+                                   </children>
                                 </AnchorPane>
                             </content>
                         </Tab>
@@ -262,7 +265,7 @@
                                                 <CategoryAxis fx:id="yAxis" side="BOTTOM" />
                                             </xAxis>
                                             <yAxis>
-                                                <NumberAxis fx:id="xAxis" side="LEFT" />
+                                                <NumberAxis side="LEFT" fx:id="xAxis" />
                                             </yAxis>
                                         </BarChart>
                                     </children>
@@ -272,7 +275,9 @@
                         <Tab text="Globals Table">
                             <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                    <TableView fx:id="tvLeagueGlobals" prefHeight="205.0" prefWidth="647.0" />
+                                   <children>
+                                       <TableView fx:id="tvLeagueGlobals" prefHeight="205.0" prefWidth="647.0" />
+                                   </children>
                                 </AnchorPane>
                             </content>
                         </Tab>

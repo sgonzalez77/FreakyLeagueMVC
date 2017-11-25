@@ -32,7 +32,7 @@
                                         <Label text="Password:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                         <TextField fx:id="txtUser" promptText="Type your user name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                         <PasswordField fx:id="txtPassword" prefHeight="200.0" promptText="Type your user password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                        <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#handleBtnLoginAction" text="Go!" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                                        <Button fx:id="btnLogin" defaultButton="true" mnemonicParsing="false" onAction="#handleBtnLoginAction" text="Go!" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                                         <Label fx:id="lblError" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="306.0" textAlignment="RIGHT" textFill="#fc0505" wrapText="true" GridPane.columnIndex="1" />
                                     </children>
                                 </GridPane>
@@ -53,7 +53,7 @@
                            </font></Label>
                                     <ImageView fitHeight="300.0" fitWidth="300.0">
                                        <image>
-                                          <Image url="/img/mojcababy01.jpg" />
+                                          <Image url="/media/mojcababy01.jpg" />
                                        </image>
                                     </ImageView>
                                  </children>

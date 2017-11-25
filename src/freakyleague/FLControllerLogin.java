@@ -56,6 +56,7 @@ public class FLControllerLogin {
         assert btnLogin != null : "fx:id=\"btnLogin\" was not injected: check your FXML file 'FLLogin.fxml'.";
         assert txtUser != null : "fx:id=\"txtUser\" was not injected: check your FXML file 'FLLogin.fxml'.";
         assert txtPassword != null : "fx:id=\"txtPassword\" was not injected: check your FXML file 'FLLogin.fxml'.";
-
+        
+        
     }
 }

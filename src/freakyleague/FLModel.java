@@ -9,10 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.TextField;
 
 /**
@@ -31,11 +29,36 @@ public class FLModel {
     }
     
     private static ClassDatabaseManager db = new ClassDatabaseManager(
-            "littlecatmonster.com:3306", //"./", //
-            "sergiopmiPES",
-            "sergiopmiPES",
-            "Pastis1Boli", 0);
-
+            ".",                                                                //"littlecatmonster.com:3306" //mysql on a web server //set type to 0!
+            "sergiopmiPES",                                                     //"localhost:1527" //derby running on NetBeans //set type to 1!
+            "sergiopmiPES",                                                     //"." //local derby database //set type to 2!
+            "Pastis1Boli", 2);
+    
+    public static Boolean closeTournament(String txtId) {
+        Boolean bool;
+        List<ClassParam> params = new ArrayList<>();
+        params.add(new ClassParam(txtId, "Integer"));
+        
+        String sql
+                = "update \"tbltournament\" set \"closed\" = true where \"id\"=?";
+        if (db.open()) {
+            bool = db.executeUpdate(sql, params);
+            db.close();
+            return bool;
+        } else {
+            return false;
+        }
+    }
+    
+    public static void deleteDBGarbage() {
+        String sql
+                = "delete from \"tbltournament\" where \"closed\" = false";
+        if (db.open()) {
+            db.executeUpdate(sql, false);
+            db.close();
+        }
+    }
+    
     public static List<ClassTournament> giveMeTournaments() {
         List<ClassTournament> tournaments = null;
 
@@ -58,8 +81,6 @@ public class FLModel {
         return tournaments;
     }
     
-   
-
     public static List<ClassMatch> giveMeTournamentData(int idT) {
         ResultSet rs = null;
         List<ClassMatch> matches = new ArrayList<>();
@@ -109,30 +130,33 @@ public class FLModel {
 
     public static int giveMeData(String type, String idTeam, String idTourn) {
         int sum = -1;
-        String sql1 = "", sql2 = "";
+        String sql1 = "", sql2 = "", addId = "";
         List<ClassParam> params = new ArrayList<>();
         params.add(new ClassParam(idTeam, "String"));
-        params.add(new ClassParam(idTourn, "Integer"));
+        if (!idTourn.equals("0")) {
+            params.add(new ClassParam(idTourn, "Integer"));
+            addId = " and \"id\" = ?";
+        }
         switch (type) {
             case "GF": //goals that you scored
-                sql1 = "SELECT sum(\"scoreHome\") FROM sergiopmiPES.\"tblmatch\" where \"home\" = ? and \"id\" = ?";
-                sql2 = "SELECT sum(\"scoreAway\") FROM sergiopmiPES.\"tblmatch\" where \"away\" = ? and \"id\" = ?";
+                sql1 = "SELECT sum(\"scoreHome\") FROM sergiopmiPES.\"tblmatch\" where \"home\" = ?" + addId;
+                sql2 = "SELECT sum(\"scoreAway\") FROM sergiopmiPES.\"tblmatch\" where \"away\" = ?" + addId;
                 break;
             case "GA": //goals against you
-                sql1 = "SELECT sum(\"scoreAway\") FROM sergiopmiPES.\"tblmatch\" where \"home\" = ? and \"id\" = ?";
-                sql2 = "SELECT sum(\"scoreHome\") FROM sergiopmiPES.\"tblmatch\" where \"away\" = ? and \"id\" = ?";
+                sql1 = "SELECT sum(\"scoreAway\") FROM sergiopmiPES.\"tblmatch\" where \"home\" = ?" + addId;
+                sql2 = "SELECT sum(\"scoreHome\") FROM sergiopmiPES.\"tblmatch\" where \"away\" = ?" + addId;
                 break;
             case "LW": //matches won at home
-                sql1 = "SELECT COUNT(*) FROM sergiopmiPES.\"tblmatch\" where \"home\" = ? and \"scoreHome\" > \"scoreAway\" and \"id\" = ?";
-                sql2 = "SELECT COUNT(*) FROM sergiopmiPES.\"tblmatch\" where \"away\" = ? and \"scoreHome\" < \"scoreAway\"  and \"id\" = ?";
+                sql1 = "SELECT COUNT(*) FROM sergiopmiPES.\"tblmatch\" where \"home\" = ? and \"scoreHome\" > \"scoreAway\"" + addId;
+                sql2 = "SELECT COUNT(*) FROM sergiopmiPES.\"tblmatch\" where \"away\" = ? and \"scoreHome\" < \"scoreAway\"" + addId;
                 break;
             case "LL": //matches lost at home
-                sql1 = "SELECT COUNT(*) FROM sergiopmiPES.\"tblmatch\" where \"home\" = ? and \"scoreHome\" < \"scoreAway\" and \"id\" = ?";
-                sql2 = "SELECT COUNT(*) FROM sergiopmiPES.\"tblmatch\" where \"away\" = ? and \"scoreHome\" > \"scoreAway\" and \"id\" = ?";
+                sql1 = "SELECT COUNT(*) FROM sergiopmiPES.\"tblmatch\" where \"home\" = ? and \"scoreHome\" < \"scoreAway\"" + addId;
+                sql2 = "SELECT COUNT(*) FROM sergiopmiPES.\"tblmatch\" where \"away\" = ? and \"scoreHome\" > \"scoreAway\"" + addId;
                 break;
             case "LD": //matches drawn at home
-                sql1 = "SELECT COUNT(*) FROM sergiopmiPES.\"tblmatch\" where \"home\" = ? and \"scoreHome\" = \"scoreAway\" and \"id\" = ?";
-                sql2 = "SELECT COUNT(*) FROM sergiopmiPES.\"tblmatch\" where \"away\" = ? and \"scoreHome\" = \"scoreAway\" and \"id\" = ?";
+                sql1 = "SELECT COUNT(*) FROM sergiopmiPES.\"tblmatch\" where \"home\" = ? and \"scoreHome\" = \"scoreAway\"" + addId;
+                sql2 = "SELECT COUNT(*) FROM sergiopmiPES.\"tblmatch\" where \"away\" = ? and \"scoreHome\" = \"scoreAway\"" + addId;
                 break;
         }
         try {
@@ -228,7 +252,7 @@ public class FLModel {
         
         if (db.open()) {
             params.add(new ClassParam(user, "String"));
-            ResultSet rs = db.executeQuery("select \"password\" from \"users\" where \"id\" = ?", params);
+            ResultSet rs = db.executeQuery("select \"password\" from \"tblusers\" where \"id\" = ?", params);
             try {
                 if (rs.next()) {
                     //System.out.println(rs.getString("password"));
