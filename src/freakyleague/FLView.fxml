@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="296.0" prefWidth="647.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="freakyleague.FLController">
+    <children>
+        <MenuBar prefHeight="29.0" prefWidth="658.0" VBox.vgrow="NEVER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem fx:id="menuNew" mnemonicParsing="false" onAction="#newTournament" text="New" />
+                        <MenuItem mnemonicParsing="false" onAction="#openTournament" text="Open…" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Quit" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Undo" />
+                        <MenuItem mnemonicParsing="false" text="Redo" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Cut" />
+                        <MenuItem mnemonicParsing="false" text="Copy" />
+                        <MenuItem mnemonicParsing="false" text="Paste" />
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem mnemonicParsing="false" text="Select All" />
+                        <MenuItem mnemonicParsing="false" text="Unselect All" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About FreakyLeague" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+            <children>
+                <TabPane layoutX="7.0" layoutY="6.0" prefHeight="261.0" prefWidth="633.0" tabClosingPolicy="UNAVAILABLE">
+                    <tabs>
+                        <Tab text="Scores">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <Label layoutX="286.0" layoutY="13.0" text="Id:" />
+                                        <TextField fx:id="txtId" disable="true" layoutX="312.0" layoutY="8.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Label layoutX="1.0" layoutY="13.0" text="Date:" />
+                                        <DatePicker fx:id="dateTourna" disable="true" layoutX="54.0" layoutY="8.0" prefHeight="27.0" prefWidth="149.0" />
+                                        <Label layoutX="1.0" layoutY="63.0" text="Day 1:">
+                                            <font>
+                                                <Font name="System Bold" size="13.0" />
+                                            </font>
+                                        </Label>
+                                        <Separator layoutX="14.0" layoutY="46.0" prefHeight="1.0" prefWidth="600.0" />
+                                        <Label layoutX="1.0" layoutY="86.0" text="Flip - Ernie" />
+                                        <TextField fx:id="txtM1D1Flip" disable="true" layoutX="97.0" layoutY="81.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Label layoutX="130.0" layoutY="86.0" text="-" />
+                                        <TextField fx:id="txtM1D1Ernie" disable="true" layoutX="137.0" layoutY="81.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Button fx:id="btnM1D1" disable="true" layoutX="175.0" layoutY="81.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBtnM1D1Action" prefHeight="26.0" prefWidth="27.0">
+                                            <graphic>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0">
+                                                    <image>
+                                                        <Image url="/img/save.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>    
+                                        </Button>
+                                        <Label layoutX="1.0" layoutY="115.0" text="Monkey - Dog" />
+                                        <TextField fx:id="txtM2D1Monkey" disable="true" layoutX="97.0" layoutY="111.0" prefHeight="27.0" prefWidth="32.0" /> 
+                                        <Label layoutX="130.0" layoutY="116.0" text="-" /> 
+                                        <TextField fx:id="txtM2D1Dog" disable="true" layoutX="137.0" layoutY="111.0" prefHeight="27.0" prefWidth="32.0" />                
+                                        <Button fx:id="btnM2D1" disable="true" layoutX="175.0" layoutY="111.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBtnM2D1Action" prefHeight="26.0" prefWidth="27.0">
+                                            <graphic>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0">
+                                                    <image>
+                                                        <Image url="/img/save.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>    
+                                        </Button>
+                                        <Label layoutX="216.0" layoutY="115.0" text="Ernie - Dog" />
+                                        <TextField fx:id="txtM1D2Flip" disable="true" layoutX="312.0" layoutY="80.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Label layoutX="345.0" layoutY="116.0" text="-" />
+                                        <TextField fx:id="txtM1D2Monkey" disable="true" layoutX="353.0" layoutY="80.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Button fx:id="btnM1D2" disable="true" layoutX="391.0" layoutY="80.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBtnM1D2Action" prefHeight="26.0" prefWidth="27.0">
+                                            <graphic>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0">
+                                                    <image>
+                                                        <Image url="/img/save.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>    
+                                        </Button>
+                                        <Label layoutX="216.0" layoutY="86.0" text="Flip - Monkey" />
+                                        <TextField fx:id="txtM2D2Ernie" disable="true" layoutX="312.0" layoutY="111.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Label layoutX="345.0" layoutY="86.0" text="-" />
+                                        <TextField fx:id="txtM2D2Dog" disable="true" layoutX="352.0" layoutY="111.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Button fx:id="btnM2D2" disable="true" layoutX="391.0" layoutY="111.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBtnM2D2Action" prefHeight="26.0" prefWidth="27.0">
+                                            <graphic>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0">
+                                                    <image>
+                                                        <Image url="/img/save.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>    
+                                        </Button>
+                                        <Label layoutX="216.0" layoutY="63.0" text="Day 2:">
+                                            <font>
+                                                <Font name="System Bold" size="13.0" />
+                                            </font>
+                                        </Label>
+                                        <Label layoutX="431.0" layoutY="115.0" text="Ernie - Monkey" />
+                                        <TextField fx:id="txtM1D3Flip" disable="true" layoutX="527.0" layoutY="80.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Label layoutX="560.0" layoutY="116.0" text="-" />
+                                        <TextField fx:id="txtM1D3Dog" disable="true" layoutX="567.0" layoutY="80.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Button fx:id="btnM1D3" disable="true" layoutX="606.0" layoutY="80.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBtnM1D3Action" prefHeight="26.0" prefWidth="27.0">
+                                            <graphic>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0">
+                                                    <image>
+                                                        <Image url="/img/save.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>    
+                                        </Button>
+                                        <Label layoutX="431.0" layoutY="86.0" text="Flip - Dog" />
+                                        <TextField fx:id="txtM2D3Ernie" disable="true" layoutX="527.0" layoutY="111.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Label layoutX="560.0" layoutY="86.0" text="-" />
+                                        <TextField fx:id="txtM2D3Monkey" disable="true" layoutX="567.0" layoutY="111.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Button fx:id="btnM2D3" disable="true" layoutX="606.0" layoutY="110.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBtnM2D3Action" prefHeight="26.0" prefWidth="27.0">
+                                            <graphic>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0">
+                                                    <image>
+                                                        <Image url="/img/save.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>    
+                                        </Button>
+                                        <Label layoutX="431.0" layoutY="63.0" text="Day 3:">
+                                            <font>
+                                                <Font name="System Bold" size="13.0" />
+                                            </font>
+                                        </Label>
+                                        <Label layoutX="431.0" layoutY="141.0" text="Day 6:">
+                                            <font>
+                                                <Font name="System Bold" size="13.0" />
+                                            </font>
+                                        </Label>
+                                        <Label layoutX="431.0" layoutY="164.0" text="Dog - Flip" />
+                                        <Label layoutX="431.0" layoutY="193.0" text="Monkey - Ernie" />
+                                        <Label layoutX="216.0" layoutY="141.0" text="Day 5:">
+                                            <font>
+                                                <Font name="System Bold" size="13.0" />
+                                            </font>
+                                        </Label>
+                                        <Label layoutX="216.0" layoutY="164.0" text="Monkey - Flip" />
+                                        <Label layoutX="216.0" layoutY="191.0" text="Dog - Ernie" />
+                                        <Label layoutX="1.0" layoutY="191.0" text="Dog -Monkey" />
+                                        <Label layoutX="1.0" layoutY="164.0" text="Ernie - Flip" />
+                                        <Label layoutX="1.0" layoutY="141.0" text="Day 4:">
+                                            <font>
+                                                <Font name="System Bold" size="13.0" />
+                                            </font>
+                                        </Label>
+                                        <TextField fx:id="txtM1D4Ernie" disable="true" layoutX="97.0" layoutY="153.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Label layoutX="130.0" layoutY="188.0" text="-" />
+                                        <TextField fx:id="txtM1D4Flip" disable="true" layoutX="137.0" layoutY="153.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Button fx:id="btnM1D4" disable="true" layoutX="175.0" layoutY="153.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBtnM1D4Action" prefHeight="26.0" prefWidth="27.0">
+                                            <graphic>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0">
+                                                    <image>
+                                                        <Image url="/img/save.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <TextField fx:id="txtM2D4Dog" disable="true" layoutX="97.0" layoutY="183.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Label layoutX="130.0" layoutY="158.0" text="-" />
+                                        <TextField fx:id="txtM2D4Monkey" disable="true" layoutX="137.0" layoutY="183.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Button fx:id="btnM2D4" disable="true" layoutX="175.0" layoutY="183.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBtnM2D4Action" prefHeight="26.0" prefWidth="27.0">
+                                            <graphic>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0">
+                                                    <image>
+                                                        <Image url="/img/save.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <TextField fx:id="txtM1D5Monkey" disable="true" layoutX="312.0" layoutY="155.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Label layoutX="345.0" layoutY="160.0" text="-" />
+                                        <TextField fx:id="txtM1D5Flip" disable="true" layoutX="353.0" layoutY="155.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Button fx:id="btnM1D5" disable="true" layoutX="390.0" layoutY="155.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBtnM1D5Action" prefHeight="26.0" prefWidth="27.0">
+                                            <graphic>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0">
+                                                    <image>
+                                                        <Image url="/img/save.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <TextField fx:id="txtM2D5Dog" disable="true" layoutX="312.0" layoutY="185.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Label layoutX="345.0" layoutY="190.0" text="-" />
+                                        <TextField fx:id="txtM2D5Ernie" disable="true" layoutX="353.0" layoutY="185.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Button fx:id="btnM2D5" disable="true" layoutX="390.0" layoutY="185.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBtnM2D5Action" prefHeight="26.0" prefWidth="27.0">
+                                            <graphic>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0">
+                                                    <image>
+                                                        <Image url="/img/save.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <TextField fx:id="txtM1D6Dog" disable="true" layoutX="527.0" layoutY="156.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Label layoutX="560.0" layoutY="191.0" text="-" />
+                                        <TextField fx:id="txtM1D6Flip" disable="true" layoutX="567.0" layoutY="156.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Button fx:id="btnM1D6" disable="true" layoutX="605.0" layoutY="156.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBtnM1D6Action" prefHeight="26.0" prefWidth="27.0">
+                                            <graphic>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0">
+                                                    <image>
+                                                        <Image url="/img/save.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                        <TextField fx:id="txtM2D6Monkey" disable="true" layoutX="527.0" layoutY="186.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Label layoutX="560.0" layoutY="161.0" text="-" />
+                                        <TextField fx:id="txtM2D6Ernie" disable="true" layoutX="567.0" layoutY="186.0" prefHeight="27.0" prefWidth="32.0" />
+                                        <Button fx:id="btnM2D6" disable="true" layoutX="605.0" layoutY="186.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleBtnM2D6Action" prefHeight="26.0" prefWidth="27.0">
+                                            <graphic>
+                                                <ImageView fitHeight="16.0" fitWidth="16.0">
+                                                    <image>
+                                                        <Image url="/img/save.png" />
+                                                    </image>
+                                                </ImageView>
+                                            </graphic>
+                                        </Button>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="League Table">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <TableView fx:id="tvLeague" prefHeight="205.0" prefWidth="647.0" />
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Globals">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <children>
+                                        <BarChart fx:id="bc" layoutX="-40.0" layoutY="-3.0" prefHeight="205.0" prefWidth="409.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+                                            <xAxis>
+                                                <CategoryAxis fx:id="yAxis" side="BOTTOM" />
+                                            </xAxis>
+                                            <yAxis>
+                                                <NumberAxis fx:id="xAxis" side="LEFT" />
+                                            </yAxis>
+                                        </BarChart>
+                                    </children>
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                        <Tab text="Globals Table">
+                            <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                    <TableView fx:id="tvLeagueGlobals" prefHeight="205.0" prefWidth="647.0" />
+                                </AnchorPane>
+                            </content>
+                        </Tab>
+                    </tabs>
+                </TabPane>
+            </children>
+        </AnchorPane>
+    </children>
+    <stylesheets>
+        <URL value="@styles.css" />
+    </stylesheets>
+</VBox>
