@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" >
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="ReportTitle" class="java.lang.String"/>
+	<parameter name="ReportSubtitle" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT `Team`, SUM(`Points`) As `Points`, SUM(`Won`) As `Won`, SUM(`Drawn`) As `Drawn`, SUM(`Lost`) As `Lost`
+                , SUM(`GF`) As `GF`, SUM(`GA`) As `GA`, (SUM(`GF`) - SUM(`GA`)) AS `GD` FROM
+                (
+                    (SELECT `home` AS `Team` 
+                     , SUM(CASE 
+                          WHEN `scoreHome` > `scoreAway` THEN 3
+                          WHEN `scoreHome` = `scoreAway` THEN 1
+                          ELSE 0
+                       END) AS `Points`
+                     , SUM(CASE 
+                          WHEN `scoreHome` > `scoreAway` THEN 1
+                          ELSE 0
+                       END) AS `Won`
+                     , SUM(CASE 
+                          WHEN `scoreHome` = `scoreAway` THEN 1
+                          ELSE 0
+                       END) AS `Drawn`
+                     , SUM(CASE 
+                          WHEN `scoreHome` < `scoreAway` THEN 1
+                          ELSE 0
+                       END) AS `Lost`
+                     , SUM(`scoreHome`) AS `GF`
+                     , SUM(`scoreAway`) AS `GA`
+                FROM sergiopmiPES.`tblmatch`
+                GROUP BY `home`)
+                  UNION ALL
+                    (SELECT `away` AS `Team`
+                     , SUM(CASE 
+                          WHEN `scoreAway` > `scoreHome` THEN 3
+                          WHEN `scoreHome` = `scoreAway` THEN 1
+                          ELSE 0
+                       END) AS `Points`
+                     , SUM(CASE 
+                          WHEN `scoreAway` > `scoreHome` THEN 1
+                          ELSE 0
+                       END) AS `Won`
+                     , SUM(CASE 
+                          WHEN `scoreAway` = `scoreHome` THEN 1
+                          ELSE 0
+                       END) AS `Drawn`
+                     , SUM(CASE 
+                          WHEN `scoreAway` < `scoreHome` THEN 1
+                          ELSE 0
+                       END) AS `Lost`
+                     , SUM(`scoreAway`) AS `GF`
+                     , SUM(`scoreHome`) AS `GA`
+                FROM sergiopmiPES.`tblmatch`
+                GROUP BY `away`)
+                ) `tmpTable`
+                GROUP BY `Team`
+                ORDER BY `Points`DESC]]>
+	</queryString>
+	<field name="Team" class="java.lang.String"/>
+	<field name="Points" class="java.math.BigDecimal"/>
+	<field name="Won" class="java.math.BigDecimal"/>
+	<field name="Drawn" class="java.math.BigDecimal"/>
+	<field name="Lost" class="java.math.BigDecimal"/>
+	<field name="GF" class="java.math.BigDecimal"/>
+	<field name="GA" class="java.math.BigDecimal"/>
+	<field name="GD" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<frame>
+                                <reportElement mode="Opaque" x="0" y="0" width="721" height="66" backcolor="#000000" />	
+                                <textField>
+					<reportElement x="0" y="0" width="368" height="66" forecolor="#FFFFFF" />
+                                        <textElement textAlignment="Left">
+						<font size="36"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{ReportTitle}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="370" y="36" width="316" height="29" forecolor="#FFFFFF" />
+                                        <textElement textAlignment="Right">
+						<font size="24"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$P{ReportSubtitle}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="70" width="721" height="32" forecolor="#000000" backcolor="#CC0000" />
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="553" y="12" width="144" height="20" forecolor="#FFFFFF" />
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="99" height="18" forecolor="#000000" />
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Team]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="99" y="0" width="99" height="18" forecolor="#000000" />
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Points]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="198" y="0" width="99" height="18" forecolor="#000000" />
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Won]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="297" y="0" width="99" height="18" forecolor="#000000" />
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Drawn]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="396" y="0" width="99" height="18" forecolor="#000000" />
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Lost]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="495" y="0" width="99" height="18" forecolor="#000000" />
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[GF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="594" y="0" width="99" height="18" forecolor="#000000" />
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[GA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="693" y="0" width="99" height="18" forecolor="#000000" />
+				<textElement>
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[GD]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="797" height="18" />
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="99" height="18" />
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Team}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="99" y="0" width="99" height="18" />
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Points}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="198" y="0" width="99" height="18" />
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Won}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="297" y="0" width="99" height="18" />
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Drawn}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="396" y="0" width="99" height="18" />
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{Lost}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="495" y="0" width="99" height="18" />
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{GF}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="594" y="0" width="99" height="18" />
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{GA}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="693" y="0" width="99" height="18" />
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{GD}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" />
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#000000" />
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="757" y="3" width="40" height="20" forecolor="#FFFFFF" />
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="677" y="3" width="80" height="20" forecolor="#FFFFFF" />
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="3" width="197" height="20" forecolor="#FFFFFF" />
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

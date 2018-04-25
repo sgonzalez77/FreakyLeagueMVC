@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="FreakyLeagueMVC.jnlp">
+  <information>
+    <title>FreakyLeagueMVC</title>
+    <vendor>sergi</vendor>
+    <description>null</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="FreakyLeagueMVC.jar" size="192840" download="eager" />
+    <jar href="lib/bcmail-jdk14-136.jar" size="189233" download="eager" />
+    <jar href="lib/bcprov-jdk14-136.jar" size="1401560" download="eager" />
+    <jar href="lib/commons-beanutils-1.8.0.jar" size="231320" download="eager" />
+    <jar href="lib/commons-collections-2.1.jar" size="165119" download="eager" />
+    <jar href="lib/commons-digester-1.7.jar" size="139966" download="eager" />
+    <jar href="lib/commons-logging-1.0.2.jar" size="26388" download="eager" />
+    <jar href="lib/derby.jar" size="2838580" download="eager" />
+    <jar href="lib/derbyclient.jar" size="586237" download="eager" />
+    <jar href="lib/derbynet.jar" size="248898" download="eager" />
+    <jar href="lib/groovy-all-2.0.1.jar" size="6191960" download="eager" />
+    <jar href="lib/itext-2.1.0.jar" size="1050691" download="eager" />
+    <jar href="lib/jasperreports-3.5.3.jar" size="2525996" download="eager" />
+    <jar href="lib/jcommon-1.0.15.jar" size="309294" download="eager" />
+    <jar href="lib/jdtcore-3.1.0.jar" size="3555707" download="eager" />
+    <jar href="lib/jfreechart-1.0.12.jar" size="1368681" download="eager" />
+    <jar href="lib/mysql-connector-java-5.1.23-bin.jar" size="834091" download="eager" />
+    <jar href="lib/xml-apis-1.3.02.jar" size="194205" download="eager" />
+  </resources>
+  <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="FreakyLeagueMVC" >
+    <param name="requiredFXVersion" value="8.0+"/>
+  </applet-desc>
+  <jfx:javafx-desc  width="800" height="600" main-class="freakyleague.FLApp"  name="FreakyLeagueMVC" />
+  <update check="always"/>
+</jnlp>

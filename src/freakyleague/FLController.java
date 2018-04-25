@@ -13,8 +13,14 @@ import java.io.File;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -90,15 +96,35 @@ public class FLController implements Initializable {
 
     @FXML
     private MenuItem menuNew;
+    
+    @FXML
+    private MenuItem menuPrint;
 
     @FXML
     private void closeApp(ActionEvent event) {
         freakyleague.FLApp.close();
     }
-
+    
+    @FXML
+    private void rptGeneral() {
+        freakyleague.FLModel.generalReport();
+    }
+    
+    @FXML
+    private void rptTournament() {
+        LocalDate localDate = dateTourna.getValue();
+        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+        Date date = Date.from(instant);
+        System.out.println(date);
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String reportDate = df.format(date);
+        System.out.println(reportDate);
+        freakyleague.FLModel.tournamentReport(txtId.getText(), reportDate);
+    }
+    
     @FXML
     private void newTournament(ActionEvent event) {
-        ClassTournament t = freakyleague.FLModel.newTournament();
+        Tournament t = freakyleague.FLModel.newTournament();
         //String[] myD = t.getDate().split("-");
         //String newD = myD[2] + "/" + myD[1] + "/" + myD[0];
 
@@ -112,6 +138,7 @@ public class FLController implements Initializable {
             txtId.setText(String.valueOf(t.getId()));
             unlockDay(btnM1D1, btnM2D1, txtM1D1Flip, txtM1D1Ernie, txtM2D1Monkey, txtM2D1Dog);
             txtM1D1Flip.requestFocus();
+            menuPrint.setDisable(true);
         }
 
     }
@@ -133,10 +160,10 @@ public class FLController implements Initializable {
         String strId = "";
         disableTextFields(true);
         disableButtons(true);
-        List<ClassTournament> tournaments = freakyleague.FLModel.giveMeTournaments();
+        List<Tournament> tournaments = freakyleague.FLModel.giveMeTournaments();
         List<String> choices = new ArrayList<>();
         String firstChoice = "";
-        ClassTournament t = null;
+        Tournament t = null;
         if (tournaments != null) {
             firstChoice = tournaments.get(0).getDateStr() + "- id: "
                     + tournaments.get(0).getId();
@@ -157,17 +184,18 @@ public class FLController implements Initializable {
             if (result.isPresent()) {
                 String[] parts = result.get().split("- id: ");
                 //parts[1] id,  parts[0] date
-                t = new ClassTournament(parts[1], parts[0]);
+                t = new Tournament(parts[1], parts[0]);
                 if (t != null) {
                     loadData(t);
+                    menuPrint.setDisable(false);
                 }
             }
         }
     }
 
-    private void loadData(ClassTournament t) throws SQLException {
+    private void loadData(Tournament t) throws SQLException {
         ResultSet rs = null;
-        List<ClassMatch> matches = null;
+        List<Match> matches = null;
         int idTourn = t.getId();
         String myDate = t.getDateStr();
 
@@ -275,10 +303,10 @@ public class FLController implements Initializable {
         //loadLeagueTableGlobals();
     }
 
-    private ClassLeagueResults giveMeLeagueData(String idPlayer, String idTor) {
-        ClassLeagueResults dataPlayer = null;
+    private LeagueResults giveMeLeagueData(String idPlayer, String idTor) {
+        LeagueResults dataPlayer = null;
 
-        dataPlayer = new ClassLeagueResults(idPlayer,
+        dataPlayer = new LeagueResults(idPlayer,
                 freakyleague.FLModel.giveMeData("LW", idPlayer, idTor),
                 freakyleague.FLModel.giveMeData("LD", idPlayer, idTor),
                 freakyleague.FLModel.giveMeData("LL", idPlayer, idTor),
@@ -291,7 +319,7 @@ public class FLController implements Initializable {
         TableColumn col = new TableColumn(name);
         col.setMinWidth(size);
         col.setCellValueFactory(
-                new PropertyValueFactory<ClassLeagueResults, String>(name));
+                new PropertyValueFactory<LeagueResults, String>(name));
         if (sort) {
             col.setSortType(TableColumn.SortType.DESCENDING);
         }
@@ -299,7 +327,7 @@ public class FLController implements Initializable {
     }
 
     private void loadLeagueCommon(TableView tv, String id) {
-        final ObservableList<ClassLeagueResults> data = FXCollections.observableArrayList(
+        final ObservableList<LeagueResults> data = FXCollections.observableArrayList(
                 giveMeLeagueData("Flip", id),
                 giveMeLeagueData("Ernie", id),
                 giveMeLeagueData("Monkey", id),
@@ -320,7 +348,7 @@ public class FLController implements Initializable {
         TableColumn colGF = createColumn("GF", 65, false);
         TableColumn colGA = createColumn("GA", 65, false);
         TableColumn colGD = createColumn("GD", 65, false);
-        SortedList<ClassLeagueResults> sortedItems = new SortedList<>(data);
+        SortedList<LeagueResults> sortedItems = new SortedList<>(data);
         tv.setItems(sortedItems);
 
         sortedItems.comparatorProperty().bind(tv.comparatorProperty());
@@ -470,6 +498,7 @@ public class FLController implements Initializable {
                             new Media(new File(musicFile).toURI().toString());
                     mediaPlayer = new MediaPlayer(sound);
                     mediaPlayer.play();
+                    menuPrint.setDisable(false);
                     //updating tableview and barchar
                     loadLeagueTable();
                     loadLeagueTableGlobals();
