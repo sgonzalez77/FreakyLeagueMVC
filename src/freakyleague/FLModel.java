@@ -26,7 +26,7 @@ import net.sf.jasperreports.view.JasperViewer;
  * @author sergi
  */
 public class FLModel {
-
+    //prova git
     private static String user = "";
 
     public static String getUser() {
